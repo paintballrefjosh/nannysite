@@ -10,19 +10,19 @@ if($_GET['op'] == 'view')
 ?>
 	<h1>The <?= $family['family_name'];?> Family - $<?= $family['weekly_rate'];?> / week</h1><div class="ruleHorizontal"></div><p>
 <?
-	$result = mysql_query("SELECT parent_id, first_name, last_name FROM nanny_parent WHERE family_id = '".$_GET['family_id']."' ORDER BY first_name ASC", $db);
+	$result = mysql_query("SELECT parent_id, first_name, last_name FROM nanny_parent WHERE deleted = '0' AND family_id = '".$_GET['family_id']."' ORDER BY first_name ASC", $db);
 	while($row = mysql_fetch_array($result))
 	{
 ?>
- 	       [P] <a href="parent.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $row['parent_id'];?>"><?= $row['first_name']." ".$row['last_name'];?></a><br>
+ 	       [Parent] <a href="parent.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $row['parent_id'];?>"><?= $row['first_name']." ".$row['last_name'];?></a><br>
 <?
 	}
 	
-	$result = mysql_query("SELECT child_id, first_name, last_name FROM nanny_child WHERE family_id = '".$_GET['family_id']."' ORDER BY first_name ASC", $db);
+	$result = mysql_query("SELECT child_id, first_name, last_name FROM nanny_child WHERE deleted = '0' AND family_id = '".$_GET['family_id']."' ORDER BY first_name ASC", $db);
 	while($row = mysql_fetch_array($result))
 	{
 ?>
- 	       [C] <a href="child.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $row['child_id'];?>"><?= $row['first_name']." ".$row['last_name'];?></a><br>
+ 	       [Child] <a href="child.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $row['child_id'];?>"><?= $row['first_name']." ".$row['last_name'];?></a><br>
 <?
 	}
 ?>
@@ -135,7 +135,29 @@ elseif($_GET['op'] == 'add')
 }
 elseif($_GET['op'] == 'delete')
 {
-	include("header.php");
+        if($_GET['confirm'] == 1)
+        {
+                mysql_query("UPDATE nanny_family SET deleted = '1' WHERE family_id = '".$_GET['family_id']."'");
+                header("Location: family.php");
+        }
+
+        include("header.php");
+
+        $family = mysql_fetch_array(mysql_query("SELECT family_name FROM nanny_family WHERE family_id = '".$_GET['family_id']."'"));
+?>
+        <h1>Delete the <?= $family['family_name'];?> Family</h1><div class="ruleHorizontal"></div><p>
+        Are you sure you want to delete this family? [<a href="family.php?op=delete&amp;family_id=<?= $_GET['family_id'];?>&amp;confirm=1">Yes</a> | <a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">No</a>]
+
+        </div>
+        <div id="rtColumn" class="cover">
+
+                <h5>Actions</h5>
+                <ul>
+                        <li><a href="parent.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Cancel</a></li>
+                </ul>
+
+        </div>
+<?
 }
 else
 {
@@ -144,7 +166,7 @@ else
 	<h1>Current Families</h1><div class="ruleHorizontal"></div><p>
 	<ul>
 <?
-	$result = mysql_query("SELECT family_id, family_name, weekly_rate FROM nanny_family ORDER BY family_name ASC", $db);
+	$result = mysql_query("SELECT family_id, family_name, weekly_rate FROM nanny_family WHERE deleted = '0' ORDER BY family_name ASC", $db);
 
 	while($row = mysql_fetch_array($result))
 	{
