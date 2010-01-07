@@ -277,7 +277,30 @@ elseif($_GET['op'] == 'add')
 }
 elseif($_GET['op'] == 'delete')
 {
+	if($_GET['confirm'] == 1)
+	{
+		mysql_query("UPDATE nanny_child SET deleted = '1' WHERE child_id = '".$_GET['child_id']."'");
+		header("Location: family.php?op=view&family_id=".$_GET['family_id']);
+	}
 
+	include("header.php");
+
+	$child = mysql_fetch_array(mysql_query("SELECT first_name, last_name FROM nanny_child WHERE child_id = '".$_GET['child_id']."'"));
+?>
+	<h1>Delete <?= $child['first_name']." ".$child['last_name'];?></h1><div class="ruleHorizontal"></div><p>
+	Are you sure you want to delete this child? [<a href="child.php?op=delete&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>&amp;confirm=1">Yes</a> | <a href="child.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>">No</a>]
+
+	</div>
+	<div id="rtColumn" class="cover">
+
+		<h5>Actions</h5>
+		<ul>
+			<li><a href="child.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>">Cancel</a></li>
+                        <li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
+		</ul>
+
+	</div>
+<?
 }
 else
 {
@@ -343,6 +366,7 @@ else
 		<h5>Actions</h5>
 		<ul>
 			<li><a href="child.php?op=edit&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>">Edit Child</a></li>
+			<li><a href="child.php?op=delete&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>">Delete Child</a></li>
 			<li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
 		</ul>
 	</div>
