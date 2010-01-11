@@ -6,7 +6,7 @@ unset($data);
 
 if(isset($_GET['child_id']))
 {
-	$child = mysql_fetch_array(mysql_query("SELECT * FROM nanny_child WHERE child_id = '".$_GET['child_id']."'"));
+	$child = mysql_fetch_array(mysql_query("SELECT * FROM nanny_child WHERE deleted = '0' AND child_id = '".$_GET['child_id']."'"));
 
 	$x = 0;
 
@@ -25,7 +25,7 @@ elseif(isset($_GET['day']))
 {
 	$x = 0;
 
-	$result = mysql_query("SELECT * FROM nanny_child WHERE ".$_GET['day']."_enable = '1'");
+	$result = mysql_query("SELECT * FROM nanny_child WHERE deleted = '0' AND ".$_GET['day']."_enable = '1'");
 
 	while($child = mysql_fetch_array($result))
 	{
