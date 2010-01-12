@@ -43,7 +43,7 @@ if($_GET['op'] == 'edit')
 				$enable = 1;
 			else
 				$enable = 0;
-echo "UPDATE nanny_child SET $day"."_enable = '$enable' WHERE child_id = '".$_GET['child_id']."'";
+
 			mysql_query("UPDATE nanny_child SET $day"."_enable = '$enable' WHERE child_id = '".$_GET['child_id']."'", $db);
 			header("Location: child.php?op=edit&family_id=".$_GET['family_id']."&child_id=".$_GET['child_id']);
 		}
