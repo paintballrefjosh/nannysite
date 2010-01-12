@@ -8,6 +8,12 @@
 	<link href="css/main.css" rel="stylesheet" type="text/css" />
 	<link href="css/menu_dropdown.css" rel="stylesheet" type="text/css" />
 	<link href="css/homepage.css" rel="stylesheet" type="text/css" />
+
+	<script src="js/jscal2.js"></script>
+        <script src="js/jscal2_en.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jscal2.css" />
+        <link rel="stylesheet" type="text/css" href="css/border-radius.css" />
+        <link rel="stylesheet" type="text/css" href="css/steel.css" />
 </head>
 
 <body>
