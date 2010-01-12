@@ -101,7 +101,7 @@ else
 	$day = date('j',$_GET['time']);
 
 	$num_days = date("t",$_GET['time']);
-	$start_day = date("w",$_GET['time']);
+	$start_day = date("w",mktime(0,0,0,$month,1,$year));
 	$num_weeks = ceil(($num_days + $start_day) / 7);
 
 	for($x = 1; $x <= 7 * $num_weeks; $x++)
@@ -112,16 +112,16 @@ else
 			$data[$x] = $x - $start_day;
 	}
 
-	next_time = 
-	prev_time = 
+	$prev_time = $_GET['time'] - ($day * 24 * 60 * 60) - (15 * 24 * 60 * 60);
+	$next_time = $_GET['time'] + (($num_days - $day) * 24 * 60 * 60) + (15 * 24 * 60 * 60);
 	
 	?> 
 	
 	<table width="100%" border="1" style="border-collapse: collapse;" cellpadding="2" cellspacing="2">
 		<tr>
-			<th><a href="financial.php?op=view&amp;m=<?= $_GET['m'] - 1;?>&amp;y=<?= $_GET['y'] - 1;?>"><<</a></th>
+			<th><a href="financial.php?op=view&amp;time=<?= $prev_time;?>"><<</a></th>
 			<th colspan="5"><?= date('M', mktime(0,0,0,$month,1,$year)).' '.$year; ?></th>
-			<th><a href="financial.php?op=view&amp;m=<?= $_GET['m'] + 1;?>">>></a></th>
+			<th><a href="financial.php?op=view&amp;time=<?= $next_time;?>">>></a></th>
 		</tr>
 		<tr>
 			<th width="15%">Sun</th>
@@ -139,7 +139,7 @@ else
 	{
 		$today = null;
 	
-		if($data[$x] == $day && $_GET['m'] == 0)
+		if($data[$x] == $day && $_GET['time'] == time())
 			$today = "bgcolor=\"lightgreen\"";
 
 		$result = mysql_query("SELECT * FROM nanny_payment WHERE payment_date = '".mktime(0,0,0,$month,$data[$x],$year)."'");
