@@ -14,7 +14,7 @@ if($_GET['op'] == 'view')
 	while($row = mysql_fetch_array($result))
 	{
 ?>
- 	       [Parent] <a href="parent.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $row['parent_id'];?>"><?= $row['first_name']." ".$row['last_name'];?></a><br>
+ 	       [Parent] <b><?= $row['first_name']." ".$row['last_name'];?></b> </a> [<a href="parent.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $row['parent_id'];?>">View</a>]<br>
 <?
 	}
 	
@@ -22,7 +22,7 @@ if($_GET['op'] == 'view')
 	while($row = mysql_fetch_array($result))
 	{
 ?>
- 	       [Child] <a href="child.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $row['child_id'];?>"><?= $row['first_name']." ".$row['last_name'];?></a><br>
+ 	       [Child] <b><?= $row['first_name']." ".$row['last_name'];?></b> [<a href="child.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $row['child_id'];?>">View</a>]<br>
 <?
 	}
 ?>
