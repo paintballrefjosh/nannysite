@@ -1,0 +1,248 @@
+/* The following works in IE7 and others. */
+/* IE6 cannot support :hover on anything but an anchor,
+ * So we add IE6 support in via javascript.
+ */
+
+/* IE6/7 hacks:
+ * _rule: value; is read only by IE6
+ * *rule: value; is read by IE6 and 7
+ */
+
+#mainNav {
+  list-style-type: none;
+  font-family: arial;
+  width: 930px;
+  height: 36px;
+  background: #000;
+	background: url(../images/mainNav_bg.png) no-repeat top left;
+  color: #fff;
+  font-size: 13px;
+	font-weight: bold;
+  line-height: 18px;
+  margin: 0;
+  padding: 0 0 0 35px;
+  z-index:1000;
+}
+
+#mainNav li {
+  display: inline;
+  float: left;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index:1000;
+  font-size: 13px;
+
+}
+#mainNav > li:hover { background: url(../images/mainNav_bg.png) no-repeat -36px -36px; z-index:1000;}
+
+#mainNav a {
+  text-decoration: none;
+  color: black;
+  /*background: purple;*/
+  display: block;
+  /* can add a width here (or on the li) */
+  /*width: 100px;*/
+
+  /* otherwise set this to make ie6 happy,
+   * but note this breaks a little bit in ie6 later,
+   * see #mainNav ol li
+   */
+  height: 36px;
+	line-height: 36px;
+	padding: 0 16px;
+	color: #fff;
+	background: url(../images/mainNav_pipe.gif) no-repeat right top;
+	z-index:1000;
+}
+
+
+#mainNav a:hover {
+z-index:1000;
+}
+#mainNav ol {
+  list-style-type: none;
+  display: none;
+  position: absolute;
+  top: 36px; /* Only IE6 needs this */
+  left: 0px;
+  /* this padding means we can't assign backgrounds or borders easily, but it let's
+   * us have some breathing room for the mouse when targeting */
+  margin: 0;
+  padding: 20px;
+  padding-top: 0;
+  z-index:1000;
+}
+
+/* have to undo styles applied earlier */
+#mainNav ol li {
+  display: block;
+  float: none;
+  position: static;
+  /* if you are not assigning a width, you will note that IE6 will not make all of
+   * the anchors the same width, so you are better off styling the li here, rather than
+   * the anchor.
+   */
+	background: url(../images/mainNav_dropdown_bg.png) no-repeat left -30px;
+	width: 180px;
+	font-size: 10px;
+	margin-top: -1px;
+	z-index:1000;
+}
+#mainNav ol li:first-child {
+	background-position: left top;
+	padding-top: 10px;
+	z-index:1000;
+}
+
+#mainNav ol li.lastChild {
+	background-position: left bottom;
+	padding-bottom: 20px;
+	z-index:1000;
+}
+
+#mainNav ol li a,
+#mainNav ol li a:hover {
+  height: auto;
+	padding: 8px 0;
+	line-height: 12px;
+	background-image: url(../images/mainNav_dropdown_rule.gif);
+	background-repeat: repeat-x;
+	background-position: left top;
+	width: 136px;
+	margin-left: 20px;
+	z-index:1000;
+}
+#mainNav ol li:first-child a {
+	background-image: none;
+	z-index:1000;
+}
+#mainNav ol li a:hover {
+	color: #000;
+	z-index:1000;
+}
+
+
+/* drop down hover */
+#mainNav li:hover ol{
+  display: block;
+	background-image: none;
+	
+}
+
+/*========== Utility Nav ==========*/
+ul#utilityNav {
+	position: absolute;
+	top: 51px;
+	right: 0px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 510px;
+	text-align: right;
+	font-size: 12px;
+	font-weight:bold;
+}
+ul#utilityNav li {
+	display: -moz-inline-box;
+	display: inline-block;
+	height: 26px;
+	line-height: 20px;
+	margin: 0;
+	padding: 0 10px;
+	position: relative;
+	vertical-align:middle;
+}
+ul#utilityNav li.last {
+	border: none;
+	width: 160px;
+	padding-right:0px;
+}
+ul#utilityNav a {
+	text-decoration: none;
+	color: #666;
+	height: 20px;
+	line-height: 24px;
+	display: inline-block;
+}
+ul#utilityNav a:hover {
+	text-decoration: underline;
+}
+ul#utilityNav li form {
+	width: 140px;
+	margin: 0;
+	padding: 0;
+}
+ul#utilityNav li fieldset {
+	border: 1px solid #D8D5D1;
+	background: #fff;
+	width: 140px;
+	height: 20px;
+	display: -moz-inline-box;
+	display: inline-block;
+	margin-bottom: -5px; /* for alignment */
+	padding-left: 0px;
+	position: relative;
+}
+ul#utilityNav li form input {
+	display: inline;
+	font-weight: bold;
+	padding-top: 1px;
+	margin-bottom: -3px;
+}
+ul#utilityNav li fieldset input[type=text] {
+	height: 14px;
+	padding: 0 0 0 0;
+	margin: 0;
+	background: none;
+	border: 0px;
+	width: 116px;
+} 
+
+
+
+/*========== Footer Nav ==========*/
+div#footer {
+	font-size: 10px;
+	color: #333;
+	margin-top: 15px;
+}
+div#footer ul {
+	font-size: 11px;
+	width: 750px;
+	float: right;
+	display: inline;
+	text-align: right;
+	list-style: none;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+div#footer ul#footerLegal {
+	width: 200px;
+	float: left;
+	text-align: left;
+}
+div#footer ul li {
+	display: inline;
+	padding: 0 10px;
+	border-right: 1px solid #BFBFBF;
+}
+div#footer ul li.lastChild {
+	padding-right: 0;
+	border: none;
+}
+div#footer ul#footerLegal li:first-child {
+	padding-left: 0;
+}
+div#footer ul li a {
+	color: #003366;
+	text-decoration: none;
+}
+div#footer ul li a:hover {
+	text-decoration: underline;
+}
+div#footer p {
+	margin: 0;
+	font-size: 11px;
+}
+
