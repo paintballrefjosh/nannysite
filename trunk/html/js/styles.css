@@ -1,0 +1,168 @@
+body {
+  font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+  background-color: #C6C6C6;
+  background-image: url(images/pgback.gif);
+  SCROLLBAR-FACE-COLOR: #cccccc;
+  SCROLLBAR-ARROW-COLOR: #000000;
+  SCROLLBAR-HIGHLIGHT-COLOR: #ffffff;
+  SCROLLBAR-SHADOW-COLOR: #ffffff;
+  SCROLLBAR-3DLIGHT-COLOR: #aaaaaa;
+  SCROLLBAR-TRACK-COLOR: #f0f0f0;
+  SCROLLBAR-DARKSHADOW-COLOR: #aaaaaa
+}
+
+/* Common */
+.mainText   {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; font-weight: normal;}
+
+.btn        {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;}
+.inpt       {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+             border: solid 1px #9F9F9F; background-color: #FFFFFF;}
+.new        {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #FF0000; font-weight: bold;}
+
+.leftColumnTd  {background-color: #F8F8F8;}
+
+.leftColumnTdSection  {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; background-color: #F8F8F8;
+                       padding: 8px;}
+.leftColumnTdContent {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; background-color: #F8F8F8;
+                      padding: 8px; padding-left: 10px; padding-top: 10px; line-height: 20px;}
+
+.contentTd     {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; background-color: #FFFFFF;
+                padding: 10px;}
+
+
+.copyrightTd  {font-family: Tahoma, Arial, Helvetica; font-size: 10px; color: #848484; padding-left: 20px;}
+.bottomMenuTd {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;  padding-right: 20px;}
+.bottomMenuTd1 {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; padding-top:10px; padding-right: 20px;}
+
+.pgLeft     {background-color: #AAAAAA; background-image: url(images/pgback.gif); background-position: top right;}
+.pgLeftS    {background-color: #EEEEEE; background-image: url(images/pglefts.gif);}
+.pgRight    {background-color: #AAAAAA; background-image: url(images/pgback.gif);}
+.pgRightS   {background-color: #EEEEEE; background-image: url(images/pgrights.gif);}
+.pgCenter   {background-color: #FFFFFF;}
+
+
+/* Search Page */
+.searchTd    {padding-left: 15px;}
+.searchTitle {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #5B5B5B;}
+.searchEdit  {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+              border: solid 1px #9F9F9F; background-color: #FFFFFF; width: 160px;}
+
+/* Common Links */
+A                {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; font-weight: normal; text-decoration: underline;}
+A:hover          {text-decoration: none;}
+
+A.link2          {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; font-weight: normal; text-decoration: none;}
+A.link2:hover    {text-decoration: underline;}
+
+A.link22          {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 12px; color: #6C6C6C; font-weight: normal; text-decoration: none;}
+A.link22:hover    {text-decoration: underline;}
+
+
+A.link3          {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #0058C0; font-weight: normal; text-decoration: none;}
+A.link3:hover    {text-decoration: underline;}
+
+A.link3b         {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #0058C0; font-weight: bold; text-decoration: none;}
+A.link3b:hover   {text-decoration: underline;}
+
+
+A.link4          {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 12px; color: #0058C0; font-weight: normal; text-decoration: underline;}
+A.link4:hover    {text-decoration: none;}
+
+A.whatsnew       {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 13px; color: #FF0000; font-weight: bold; text-decoration: none;}
+A.whatsnew:hover {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 13px; color: #FF0000; font-weight: bold; text-decoration: underline;}
+
+A.tree       {font-family: Arial, Helvetica; font-size: 16px; color: #000000; font-weight: bold; text-decoration: none;}
+A.tree:hover {font-family: Arial, Helvetica; font-size: 16px; color: #000000; font-weight: bold; text-decoration: underline;}
+
+
+A.sampleLink       {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #AA0000; font-weight: normal; text-decoration: underline;}
+A.sampleLink:hover {text-decoration: none;}
+
+
+/* Menu */
+.menuShadow  {font-size: 1px;
+              background-color: #333333; background-image: url(images/mshadow.gif); background-repeat: repeat-x;}
+
+/* Separators */
+.sep         {height: 1px; background-color: #D0D0D0;}
+.sep2        {height: 1px; background-color: #D0D0D0;background-image: url(images/sep.gif); background-repeat: repeat-x;}
+.sepleft     {font-size: 1px; background-image: url(images/sepleft.gif); background-repeat: repeat-y; background-color: #CFCFCF;}
+
+
+/* Titles */
+.title       {font-family: Arial, Helvetica; font-size: 16px; font-weight: bold; color: #333333;}
+.new_title   {font-family: Arial, Helvetica; font-size: 16px; font-weight: bold; color: #FF0000;}
+
+.subtitleTd  {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; font-weight: bold; color: #000000;
+              background: url(images/stitleb.gif); background-repeat: repeat-x; background-color: #ECECEC;
+              padding-left: 10px; padding-right: 10px;}
+.subtitleTdred
+             {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; font-weight: bold; color: #250000;
+              background: url(images/stitlebred.gif); background-repeat: repeat-x; background-color: #FFC4C5;
+              padding-left: 10px; padding-right: 10px;}
+.subtitleTdblue
+             {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; font-weight: bold; color: #250000;
+              background: url(images/stitlebblue.gif); background-repeat: repeat-x; background-color: #C2DDFF;
+              padding-left: 10px; padding-right: 10px;}
+
+
+.section     {font-family: Trebuchet MS, Arial, Helvetica; font-size: 16px; font-weight: bold; color: #333333;}
+.subsection  {padding: 15px 0px 5px 0px; font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; font-weight: bold; color: #000000;}
+
+A.item,
+A.item:visited       {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; text-decoration: none;}
+A.item:hover,
+A.item:visited:hover {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; text-decoration: underline;}
+
+
+.featureTd    {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+               border-left: solid 3px #CCCCCC; border-right: solid 3px #CCCCCC; border-top: solid 1px #CCCCCC; background-color: #F8F8F8;}
+.featureTd2   {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #0064AD;
+               border-left: solid 1px #CCCCCC; border-top: solid 1px #CCCCCC;
+               padding-bottom: 12px;}
+
+A.featureLink       {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #0064AD; font-weight: normal; text-decoration: underline;}
+A.featureLink:hover {text-decoration: none;}
+
+
+.setupTable   {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+               width: 100%; border: solid 1px #CCCCCC; background-color: #FAFAFA;}
+
+
+.searchResTable  {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+                  width: 90%;}
+.searchFoundText {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #AA0000;  font-weight: bold;}
+
+A.foundLink       {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #0000AA; font-weight: normal; text-decoration: underline;}
+A.foundLink:hover {text-decoration: none;}
+
+
+.hlText      {color: #126ED3; font-weight: normal;}
+.hlText2     {color: #AA0000; font-weight: normal;}
+
+
+/* Parameters Page */
+.paramName    {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #24B20E; font-weight: bold;}
+.paramTd1     {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #1C8F0B;
+               border-left: solid 1px #CCCCCC; border-top: solid 1px #CCCCCC;}
+.paramTd2     {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+               border-left: solid 3px #CCCCCC; border-right: solid 3px #CCCCCC; border-top: solid 1px #CCCCCC; background-color: #F8F8F8;}
+.paramTd12    {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #126ED3;
+               border-left: solid 1px #CCCCCC; border-top: solid 1px #CCCCCC;}
+
+.paramSectionText
+              {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000; font-weight: bold;}
+
+.funcName     {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #AA0000; font-weight: bold;}
+.funcParam    {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #0064AD; font-weight: bold;}
+
+hr {height: 1px; color: #CCCCCC;}
+
+.licenseTd    {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+               border-left: solid 3px #CCCCCC; border-top: solid 1px #CCCCCC; border-right: solid 1px #CCCCCC;}
+
+.hintTd       {font-family: Trebuchet MS, Tahoma, Arial, Helvetica; font-size: 11px; color: #000000;
+               padding: 5px; border: solid 1px #CCCCCC; background-color: #FFFBDE;}
+
+.vLine        {width: 1px; background-image: url(images/vline.gif); background-repeat: repeat-y;  background-color: #ECECEC;}
+
