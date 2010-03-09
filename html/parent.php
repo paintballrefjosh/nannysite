@@ -57,7 +57,6 @@ if($_GET['op'] == 'edit')
 	<BR clear="all" />		
 
 	<div align="right">
-		<input id="button" type="reset" name="reset" value="Reset"> 
 		<input id="button" type="submit" name="submit" value="Save">
 	</div>
 
@@ -65,6 +64,7 @@ if($_GET['op'] == 'edit')
 	</div><div id="rtColumn" class="cover">
 		<h5>Actions</h5>
 		<ul>
+			<li><a href="parent.php?op=view&amp;parent_id=<?= $_GET['parent_id'];?>&amp;family_id=<?= $_GET['family_id'];?>">Cancel</a></li>
 			<li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
 		</ul>
 	</div>
@@ -129,7 +129,6 @@ elseif($_GET['op'] == 'add')
 		<input type="image" name="submit" value="Submit" src="images/icon/submit.png" width="50" height="50">
 -->
 
-		<input id="button" type="reset" name="reset" value="reset"> 
 		<input id="button" type="submit" name="submit" value="Add Parent">
 	</div>
 
@@ -137,6 +136,7 @@ elseif($_GET['op'] == 'add')
 	</div><div id="rtColumn" class="cover">
 		<h5>Actions</h5>
 		<ul>
+			<li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Cancel</a></li>
 			<li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
 		</ul>
 	</div>
@@ -218,10 +218,9 @@ else
 <!--
 		<a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>"><img border="0" src="images/icon/cancel.png" width="50" height="50"></a>
 		<input type="image" name="submit" value="Submit" src="images/icon/submit.png" width="50" height="50">
--->
 
-		<input id="button" onclick="window.location.href='family.php?op=view&family_id=<?= $_GET['family_id'];?>'" type="button" name="edit" value="Back to Family">
 		<input id="button" onclick="window.location.href='parent.php?op=edit&family_id=<?= $_GET['family_id'];?>&parent_id=<?= $_GET['parent_id'];?>'" type="button" name="edit" value="Edit" /> 
+-->
 <!--		<input type="submit" name="submit" value="Submit">-->
 
 	</div>
@@ -231,6 +230,7 @@ else
 		<h5>Actions</h5>
 		<ul>
 			<li><a href="parent.php?op=edit&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $_GET['parent_id'];?>">Edit Parent</a></li>
+			<li><a href="parent.php?op=delete&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $_GET['parent_id'];?>">Delete Parent</a></li>
 			<li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
 		</ul>
 	</div>

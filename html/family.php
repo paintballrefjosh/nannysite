@@ -1,20 +1,21 @@
 <?
 
+include("include/functions.php");
 include("config.php");
 
 
 if($_GET['op'] == 'view')
 {
 	include("header.php");
-	$family = mysql_fetch_array(mysql_query("SELECT * FROM nanny_family WHERE family_id = '".$_GET['family_id']."'"));
+	$family = mysql_fetch_array(mysql_query("SELECT * FROM nanny_family WHERE family_id = '" . $_GET['family_id'] . "'"));
 ?>
-	<h1>The <?= $family['family_name'];?> Family - $<?= $family['weekly_rate'];?> / week</h1><div class="ruleHorizontal"></div><p>
+	<h1>The <?= $family['family_name'];?> Family - $<?= $family['payment_amount'] . " / " . $family['payment_rate'];?></h1><div class="ruleHorizontal"></div><p>
 <?
 	$result = mysql_query("SELECT parent_id, first_name, last_name FROM nanny_parent WHERE deleted = '0' AND family_id = '".$_GET['family_id']."' ORDER BY first_name ASC", $db);
 	while($row = mysql_fetch_array($result))
 	{
 ?>
- 	       [Parent] <b><?= $row['first_name']." ".$row['last_name'];?></b> </a> [<a href="parent.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $row['parent_id'];?>">View</a>]<br>
+ 	       [Parent] <b><?= $row['first_name'] . " " . $row['last_name'];?></b> </a> [<a href="parent.php?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;parent_id=<?= $row['parent_id'];?>">View</a>]<br>
 <?
 	}
 	
@@ -44,10 +45,16 @@ elseif($_GET['op'] == 'edit')
 {
 	if(isset($_POST['submit']))
 	{
-		mysql_query("UPDATE nanny_family SET 
+		$sql = "UPDATE nanny_family SET 
 			family_name	= '".$_POST['family_name']."',
-			weekly_rate 	= '".$_POST['weekly_rate']."'
-			WHERE family_id = '".$_GET['family_id']."'", $db);
+			payment_rate	= '".$_POST['payment_rate']."',
+			payment_amount 	= '".$_POST['payment_amount']."'
+			WHERE family_id = '".$_GET['family_id']."'";
+
+		if(!mysql_query($sql, $db))
+		{
+			do_error($sql, $db);
+		}
 
 		header("Location: family.php?op=view&family_id=".$_GET['family_id']);
 	}
@@ -57,7 +64,7 @@ elseif($_GET['op'] == 'edit')
 	$family = mysql_fetch_array(mysql_query("SELECT * FROM nanny_family WHERE family_id = '".$_GET['family_id']."'"));
 ?>
 	<form method="post">
-	<h1>The <?= $family['family_name'];?> Family - $<?= $family['weekly_rate'];?> / week</h1><div class="ruleHorizontal"></div><p>
+	<h1>The <?= $family['family_name'];?> Family - $<?= $family['payment_amount']." / ".$family['payment_rate'];?></h1><div class="ruleHorizontal"></div><p>
 
 	<div class="formquestion"><label>Family Name (Last Only)</label></div>
 	<div class="formanswer">
@@ -66,9 +73,16 @@ elseif($_GET['op'] == 'edit')
 
 	<BR clear="all" />
 
-	<div class="formquestion"><label>Weekly Rate</label></div>
+	<div class="formquestion"><label>Payment Rate</label></div>
+        <div class="formanswer">
+                <input id="radio" type="radio" name="payment_rate" alt="Payment Rate" value="day" <? if($family['payment_rate'] == "day") echo 'checked="checked" ';?>/> Daily<br>
+		<input id="radio" type="radio" name="payment_rate" alt="Payment Rate" value="week" <? if($family['payment_rate'] == "week") echo 'checked="checked" ';?>/> Weekly
+        </div>
+        <BR clear="all" />
+
+	<div class="formquestion"><label>Payment Amount</label></div>
 	<div class="formanswer">
-		<input type="text" name="weekly_rate" alt="Weekly Rate" maxlength="50" value="<?= $family['weekly_rate'];?>" />
+		<input type="text" name="payment_amount" maxlength="50" value="<?= $family['payment_amount'];?>" />
 	</div>
 	<BR clear="all" />
 
@@ -166,12 +180,12 @@ else
 	<h1>Current Families</h1><div class="ruleHorizontal"></div><p>
 	<ul>
 <?
-	$result = mysql_query("SELECT family_id, family_name, weekly_rate FROM nanny_family WHERE deleted = '0' ORDER BY family_name ASC", $db);
+	$result = mysql_query("SELECT * FROM nanny_family WHERE deleted = '0' ORDER BY family_name ASC", $db);
 
 	while($row = mysql_fetch_array($result))
 	{
 ?>
-		<li><a href="family.php?op=view&amp;family_id=<?= $row['family_id'];?>">The <?= $row['family_name'];?> Family</a> - $<?= $row['weekly_rate'];?> / week</li>
+		<li><a href="family.php?op=view&amp;family_id=<?= $row['family_id'];?>">The <?= $row['family_name'];?> Family</a> - $<?= $row['payment_amount'];?> / <?= $row['payment_rate'];?></li>
 <?
 	}
 ?>
