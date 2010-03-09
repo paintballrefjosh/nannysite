@@ -731,6 +731,10 @@ float:left;
 margin-bottom:5px;
 }
 
+input#radio{
+width: 20px;
+}
+
 input{
 width: 250px;
 }
@@ -742,7 +746,7 @@ border: 1px solid black;
 }
 
 .calendar_add{
-float:right top;
+float:right;
 font-size: 9px;
 visibility: hidden;
 }

@@ -1,5 +1,126 @@
 <?
 
+//new function
+
+$to = "paintballrefjosh@gmail.com";
+$nameto = "Who To";
+$from = "josh@moahosting.com";
+$namefrom = "Who From";
+$subject = "Hello World Again!";
+$message = "World, Hello!";
+// echo authSendEmail($from, $namefrom, $to, $nameto, $subject, $message);
+
+
+/* * * * * * * * * * * * * * SEND EMAIL FUNCTIONS * * * * * * * * * * * * * */
+
+//Authenticate Send - 21st March 2005
+//This will send an email using auth smtp and output a log array
+//logArray - connection,
+
+function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
+{
+//SMTP + SERVER DETAILS
+/* * * * CONFIGURATION START * * * */
+$smtpServer = "fmailhost.isp.att.net";
+$port = "465";
+$timeout = "30";
+$username = "josh@moahosting.com";
+$password = "sxwfksre";
+$localhost = "moahosting.com";
+$newLine = "\r\n";
+/* * * * CONFIGURATION END * * * * */
+
+//Connect to the host on the specified port
+$smtpConnect = fsockopen($smtpServer, $port, $errno, $errstr, $timeout);
+echo "Connected successfully";
+$smtpResponse = fgets($smtpConnect, 515);
+if(empty($smtpConnect))
+{
+$output = "Failed to connect: $smtpResponse";
+return $output;
+}
+else
+{
+$logArray['connection'] = "Connected: $smtpResponse";
+}
+
+//Request Auth Login
+fputs($smtpConnect,"AUTH LOGIN" . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['authrequest'] = "$smtpResponse";
+
+//Send username
+fputs($smtpConnect, base64_encode($username) . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['authusername'] = "$smtpResponse";
+
+//Send password
+fputs($smtpConnect, base64_encode($password) . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['authpassword'] = "$smtpResponse";
+
+//Say Hello to SMTP
+fputs($smtpConnect, "HELO $localhost" . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['heloresponse'] = "$smtpResponse";
+
+//Email From
+fputs($smtpConnect, "MAIL FROM: $from" . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['mailfromresponse'] = "$smtpResponse";
+
+//Email To
+fputs($smtpConnect, "RCPT TO: $to" . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['mailtoresponse'] = "$smtpResponse";
+
+//The Email
+fputs($smtpConnect, "DATA" . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['data1response'] = "$smtpResponse";
+
+//Construct Headers
+$headers = "MIME-Version: 1.0" . $newLine;
+$headers .= "Content-type: text/html; charset=iso-8859-1" . $newLine;
+$headers .= "To: $nameto <$to>" . $newLine;
+$headers .= "From: $namefrom <$from>" . $newLine;
+
+fputs($smtpConnect, "To: $to\nFrom: $from\nSubject: $subject\n$headers\n\n$message\n.\n");
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['data2response'] = "$smtpResponse";
+
+// Say Bye to SMTP
+fputs($smtpConnect,"QUIT" . $newLine);
+$smtpResponse = fgets($smtpConnect, 515);
+$logArray['quitresponse'] = "$smtpResponse";
+}
+
+function do_error($sql = "", $db = "")
+{
+	$msg = "An error has occured on the site. See details below for debugging.\n";
+	$msg .= "Client IP: ".$_SERVER['REMOTE_ADDR']."\n";
+
+	if($sql != "")
+	{
+		$msg .= "SQL: $sql\nMySQL Error #".mysql_errno($db).": ".mysql_error($db)."\n";
+	}
+
+	$get_data = "?";
+	foreach($_GET as $key => $val)
+	{
+		$get_data .= "$key=$val&";
+	}
+
+	$url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].$get_data;
+
+	$msg .= "URL: $url\n";
+	$msg .= "POST data: $post_data\n";
+	
+	$headers = "From: support@moahosting.com\n";
+
+	mail("paintballrefjosh@gmail.com", "Error on the Nanny Site!", $msg, $headers);
+}
+
 function generate_date($day)
 {
 	switch($day)

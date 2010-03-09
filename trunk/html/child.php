@@ -121,27 +121,32 @@ if($_GET['op'] == 'edit')
 		$isdata = false;
 		$cal_day = $data[$x];
 
-		if($data[$x] == $day && $_GET['time'] == time())
+		if($cal_day == $day && $_GET['time'] == time())
 			$today = "bgcolor=\"lightgreen\"";
+			
+//		$data[$x] = "<div id=calendar_date>".$cal_day."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div><br>";
 
-		$result = mysql_query("SELECT * FROM nanny_payment WHERE payment_date = '".mktime(0,0,0,$month,$data[$x],$year)."'");
+
+		$result = mysql_query("SELECT * FROM nanny_payment WHERE payment_date = '".mktime(0,0,0,$month,$cal_day,$year)."'");
 		while($payment = mysql_fetch_array($result))
 		{
 			$isdata = true;
 			// bold the number in the upper left
 			// $data[$x] = "<div id=cd_".$data[$x]." class=calendar_date>".$data[$x]."</div><div id=calendar_add>[Add]</div>";
-			$data[$x] = "<div id=calendar_date>".$cal_day."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div>";
+			//$data[$x] = "<div id=calendar_date>".$cal_day."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div>";
 
 			$family = mysql_fetch_array(mysql_query("SELECT family_name FROM nanny_family WHERE family_id = '".$payment['family_id']."'"));
-			$data[$x] .= "<div style='float: top;font-size: 9px;'>".$family['family_name']."($".round($payment['amount']).")</div>";
+			$data[$x] = "<div style='float: top left; font-size: 9px;'>".$family['family_name']."($".round($payment['amount']).")</div>";
 		}
 
-		if(!$isdata && $data[$x])
+		$data_out = "<div id=calendar_date>".$cal_day."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div>";
+
+		if($isdata || ($data[$x] != $cal_day))
 		{
-			$data[$x] = "<div id=calendar_date>".$data[$x]."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div>";
+			$data_out .= $data[$x];
 		}
 ?>
-		<td height="70" align="left" valign="top" onmouseover="document.getElementById('cd_<?= $cal_day;?>').style.visibility='visible';" onmouseout="document.getElementById('cd_<?= $cal_day;?>').style.visibility='hidden';" <?= $today;?>><?= $data[$x];?></td>
+		<td height="70" align="left" valign="top" onContextMenu="return apy_popup(1, 1000, event);" onmouseover="document.getElementById('cd_<?= $cal_day;?>').style.visibility='visible';" onmouseout="document.getElementById('cd_<?= $cal_day;?>').style.visibility='hidden';" <?= $today;?>><?= $data_out;?></td>
 <?
 		
 		if($x % 7 == 0)

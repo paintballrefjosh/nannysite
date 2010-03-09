@@ -1,6 +1,6 @@
 var popupMode=1;
 
-var blankImage="img/blank.gif";
+var blankImage="images/blank.gif";
 var isHorizontal=0;
 var menuWidth=0;
 var absolutePos=0;
@@ -10,7 +10,7 @@ var floatable=0;
 var floatIterations=5;
 var movable=0;
 var moveCursor="move";
-var moveImage="img/movepic4.gif";
+var moveImage="images/movepic4.gif";
 var moveWidth=12;
 var moveHeight=18;
 var fontStyle="normal 8pt Tahoma";
@@ -41,17 +41,17 @@ var transition=24;
 var transDuration=300;
 var shadowColor="#C7C7C7";
 var shadowLen=3;
-var arrowImageMain=["img/arrow_r.gif","img/arrow_r.gif"];
-var arrowImageSub=["img/arrow_r.gif","img/arrow_r.gif"];
+var arrowImageMain=["images/arrow_r.gif","images/arrow_r.gif"];
+var arrowImageSub=["images/arrow_r.gif","images/arrow_r.gif"];
 var arrowWidth=7;
 var arrowHeight=7;
 
-var separatorImage="img/separ1.gif";
+var separatorImage="images/separ1.gif";
 var separatorWidth="100%";
 var separatorHeight="5";
 var separatorAlignment="center";
 
-var separatorVImage="img/separ1.gif";
+var separatorVImage="images/separ1.gif";
 var separatorVWidth="100&";
 var separatorVHeight="5";
 var statusString="text";

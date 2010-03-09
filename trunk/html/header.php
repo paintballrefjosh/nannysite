@@ -9,6 +9,9 @@
 	<link href="css/menu_dropdown.css" rel="stylesheet" type="text/css" />
 	<link href="css/homepage.css" rel="stylesheet" type="text/css" />
 
+	<script src="js/menu.js"></script>
+	<script src="js/menu1.js"></script>
+	<script src="js/menu2.js"></script>
 	<script src="js/jscal2.js"></script>
         <script src="js/jscal2_en.js"></script>
         <link rel="stylesheet" type="text/css" href="css/jscal2.css" />
