@@ -1,4 +1,4 @@
-/* The following works in IE7 and others. */
+/ * The following works in IE7 and others. */
 /* IE6 cannot support :hover on anything but an anchor,
  * So we add IE6 support in via javascript.
  */
@@ -582,7 +582,6 @@ pre.advise a {
 	padding:10px;
 	float: right;
 	display: inline;
-	
 }
 .floatLeft {
 	padding:10px;
@@ -735,8 +734,12 @@ input#radio{
 width: 20px;
 }
 
-input{
+input,textarea{
 width: 250px;
+}
+
+textarea{
+height: 100px;
 }
 
 input#button{
@@ -752,7 +755,7 @@ visibility: hidden;
 }
 
 div#calendar_date{
-float:left top;
+float:top left;
 font-size: 12px;
 font-weight: bold;
 text-align: center;

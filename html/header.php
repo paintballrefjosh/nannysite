@@ -4,14 +4,13 @@
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>The Scarbrough's Site</title>	
-	<!-- Styles -->
+
+<!-- CSS Stylesheets -->
 	<link href="css/main.css" rel="stylesheet" type="text/css" />
 	<link href="css/menu_dropdown.css" rel="stylesheet" type="text/css" />
 	<link href="css/homepage.css" rel="stylesheet" type="text/css" />
 
-	<script src="js/menu.js"></script>
-	<script src="js/menu1.js"></script>
-	<script src="js/menu2.js"></script>
+<!-- Javascript Calendar -->
 	<script src="js/jscal2.js"></script>
         <script src="js/jscal2_en.js"></script>
         <link rel="stylesheet" type="text/css" href="css/jscal2.css" />
@@ -20,6 +19,10 @@
 </head>
 
 <body>
+
+<!-- Tooltip -->
+<script src="js/wz_tooltip.js"></script>
+
 <div id="bg_top"></div>
 <div id="wrapper">
 
