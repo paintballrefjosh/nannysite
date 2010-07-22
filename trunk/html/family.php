@@ -27,10 +27,18 @@ if($_GET['op'] == 'view')
 <?
 	}
 ?>
-	</div>
+	<br>
+	<h1>This Month's Schedule</h1><div class="ruleHorizontal"></div></p>
+
+<?
+
+	draw_graph(0, $_GET['family_id']);
+#        draw_calendar(0,$_GET['family_id']);
+
+?>
 
 	<!--  Rt Column -->
-	<div id="rtColumn" class="cover">
+	</div><div id="rtColumn" class="cover">
 		<h5>Actions</h5>
 		<ul>
 		        <li><a href="parent.php?op=add&amp;family_id=<?= $_GET['family_id'];?>">Add Parent</a></li>
@@ -87,7 +95,6 @@ elseif($_GET['op'] == 'edit')
 	<BR clear="all" />
 
 	<div align="right">
-		<input id="button" type="reset" name="reset" value="Reset"> 
 		<input id="button" type="submit" name="submit" value="Save">
 	</div>
 
@@ -95,6 +102,7 @@ elseif($_GET['op'] == 'edit')
 	</div><div id="rtColumn" class="cover">
 		<h5>Actions</h5>
 		<ul>
+		        <li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Cancel</a></li>
 		        <li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
 		</ul>
 	</div>
@@ -103,45 +111,55 @@ elseif($_GET['op'] == 'edit')
 }
 elseif($_GET['op'] == 'add')
 {
-        if(isset($_POST['submit']))
+	if(isset($_POST['submit']))
         {
-                mysql_query("INSERT INTO nanny_family SET
+                $sql = "INSERT INTO nanny_family SET 
                         family_name     = '".$_POST['family_name']."',
-                        weekly_rate     = '".$_POST['weekly_rate']."'", $db);
+                        payment_rate    = '".$_POST['payment_rate']."',
+                        payment_amount  = '".$_POST['payment_amount']."'";
 
-                #header("Location: family.php?op=view&family_id=".$_GET['family_id']);
+                if(!mysql_query($sql, $db))
+                {
+                        do_error($sql, $db);
+                }
+
                 header("Location: family.php");
         }
 
         include("header.php");
-
 ?>
         <form method="post">
         <h1>Add New Family</h1><div class="ruleHorizontal"></div><p>
 
         <div class="formquestion"><label>Family Name (Last Only)</label></div>
         <div class="formanswer">
-                <input type="text" name="family_name" alt="Family Name" maxlength="50" value="" />
+                <input type="text" name="family_name" alt="Family Name" maxlength="50" /> 
         </div>
 
         <BR clear="all" />
 
-        <div class="formquestion"><label>Weekly Rate</label></div>
+        <div class="formquestion"><label>Payment Rate</label></div>
         <div class="formanswer">
-                <input type="text" name="weekly_rate" alt="Weekly Rate" maxlength="50" value="" />
+                <input id="radio" type="radio" name="payment_rate" alt="Payment Rate" value="day" checked="checked" /> Daily<br>
+                <input id="radio" type="radio" name="payment_rate" alt="Payment Rate" value="week" /> Weekly 
+        </div>
+        <BR clear="all" />
+
+        <div class="formquestion"><label>Payment Amount</label></div>
+        <div class="formanswer">
+                <input type="text" name="payment_amount" maxlength="50" /> 
         </div>
         <BR clear="all" />
 
         <div align="right">
-                <input id="button" type="reset" name="reset" value="Reset" />
-                <input id="button" type="submit" name="submit" value="Save" />
+                <input id="button" type="submit" name="submit" value="Save">
         </div>
 
         <!--  Rt Column -->
         </div><div id="rtColumn" class="cover">
                 <h5>Actions</h5>
                 <ul>
-                        <li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
+                        <li><a href="family.php">Cancel</a></li>
                 </ul>
         </div>
         </form>

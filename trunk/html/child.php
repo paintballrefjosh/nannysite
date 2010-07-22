@@ -11,9 +11,7 @@ if($_GET['op'] == 'edit')
 			family_id		= '".$_GET['family_id']."',
 			first_name 		= '".$_POST['first_name']."',
 			last_name 		= '".$_POST['last_name']."',
-			pickup_address		= '".$_POST['pickup_address']."',
-			dropoff_address 	= '".$_POST['dropoff_address']."',
-			pickup_address		= '".$_POST['pickup_address']."'
+			notes			= '".$_POST['notes']."'
 			WHERE child_id 		= '".$_GET['child_id']."'";
 
 		mysql_query($sql, $db);
@@ -48,27 +46,18 @@ if($_GET['op'] == 'edit')
 	</div>
 	<br clear="all" />
 	
-	<div class="formquestion"><label>Drop Off Address</label></div>
+	<div class="formquestion"><label>Notes</label></div>
 	<div class="formanswer">
-		<input type="text" name="dropoff_address" alt="Drop Off Address" maxlength="50" value="<?= $child['dropoff_address'];?>" />
+		<textarea name="notes"><?= $child['notes'];?></textarea>
 	</div>
 	<br clear="all" />		
 
-	<div class="formquestion"><label>Pick Up Address</label></div>
-	<div class="formanswer">
-		<input type="text" name="pickup_address" alt="Pick Up Address" maxlength="50" value="<?= $child['pickup_address'];?>" />
-	</div>
-	<br clear="all" />	
-
 	<br />
 	<div align="right">
-		<input id="button" type="button" name="cancel" value="Cancel" onclick="window.location.href='child.php?op=view&family_id=<?= $_GET['family_id'];?>&child_id=<?= $_GET['child_id'];?>'"> 
 		<input id="button" type="submit" name="submit" value="Save">
 	</div>
 
         <h1>Schedule</h1><div class="ruleHorizontal"></div><p>
-	<script type="text/javascript" language="JavaScript1.2">var dmWorkPath='js/';</script>
-	<script type="text/javascript" src="menu/dmenu.js"></script>
 
 <?
 	if(!$_GET['time'])
@@ -124,29 +113,23 @@ if($_GET['op'] == 'edit')
 		if($cal_day == $day && $_GET['time'] == time())
 			$today = "bgcolor=\"lightgreen\"";
 			
-//		$data[$x] = "<div id=calendar_date>".$cal_day."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div><br>";
-
-
 		$result = mysql_query("SELECT * FROM nanny_payment WHERE payment_date = '".mktime(0,0,0,$month,$cal_day,$year)."'");
 		while($payment = mysql_fetch_array($result))
 		{
 			$isdata = true;
-			// bold the number in the upper left
-			// $data[$x] = "<div id=cd_".$data[$x]." class=calendar_date>".$data[$x]."</div><div id=calendar_add>[Add]</div>";
-			//$data[$x] = "<div id=calendar_date>".$cal_day."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div>";
 
 			$family = mysql_fetch_array(mysql_query("SELECT family_name FROM nanny_family WHERE family_id = '".$payment['family_id']."'"));
 			$data[$x] = "<div style='float: top left; font-size: 9px;'>".$family['family_name']."($".round($payment['amount']).")</div>";
 		}
 
-		$data_out = "<div id=calendar_date>".$cal_day."</div><div id=cd_".$cal_day." class=calendar_add>[Add]</div>";
+		$data_out = "<div id=calendar_date>".$cal_day."</div>";
 
 		if($isdata || ($data[$x] != $cal_day))
 		{
 			$data_out .= $data[$x];
 		}
 ?>
-		<td height="70" align="left" valign="top" onContextMenu="return apy_popup(1, 1000, event);" onmouseover="document.getElementById('cd_<?= $cal_day;?>').style.visibility='visible';" onmouseout="document.getElementById('cd_<?= $cal_day;?>').style.visibility='hidden';" <?= $today;?>><?= $data_out;?></td>
+		<td height="70" align="left" valign="top" onContextMenu="Tip('Test!', FOLLOWMOUSE, false); return false;" onClick="UnTip();" <?= $today;?>><?= $data_out;?></td>
 <?
 		
 		if($x % 7 == 0)
@@ -158,12 +141,6 @@ if($_GET['op'] == 'edit')
 	?>
 	
 	</tr></table>
-
-	<br />
-	<div align="right">
-		<input id="button" type="button" name="cancel" value="Cancel" onclick="window.location.href='child.php?op=view&family_id=<?= $_GET['family_id'];?>&child_id=<?= $_GET['child_id'];?>'">
-		<input id="button" type="submit" name="submit" value="Save">
-	</div>
 
 	<!--  Rt Column -->
 	</div><div id="rtColumn" class="cover">
@@ -182,11 +159,10 @@ elseif($_GET['op'] == 'add')
 	if(isset($_POST['submit']))
 	{
 		mysql_query("INSERT INTO nanny_child SET 
-                        family_id               = '".$_GET['family_id']."',
-                        first_name              = '".$_POST['first_name']."',
-                        last_name               = '".$_POST['last_name']."',
-                        pickup_address          = '".$_POST['pickup_address']."',
-                        dropoff_address         = '".$_POST['dropoff_address']."'", $db);
+                        family_id	= '".$_GET['family_id']."',
+                        first_name	= '".$_POST['first_name']."',
+                        last_name	= '".$_POST['last_name']."',
+                        notes		= '".$_POST['notes']."'", $db);
 
 		header("Location: family.php?op=view&family_id=".$_GET['family_id']);
 	}
@@ -216,25 +192,13 @@ elseif($_GET['op'] == 'add')
 	</div>
 	<br clear="all" />
 	
-        <div class="formquestion"><label>Drop Off Address</label></div>
+        <div class="formquestion"><label>Notes</label></div>
         <div class="formanswer">
-                <input type="text" name="dropoff_address" alt="Drop Off Address" maxlength="50" />
-        </div>
-        <br clear="all" />
-
-        <div class="formquestion"><label>Pick Up Address</label></div>
-        <div class="formanswer">
-                <input type="text" name="pickup_address" alt="Pick Up Address" maxlength="50" />
+                <textarea name="notes"><?= $child['notes'];?></textarea>
         </div>
         <br clear="all" />
 
 	<div align="right">
-<!--
-		<a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>"><img border="0" src="images/icon/cancel.png" width="50" height="50"></a>
-		<input type="image" name="submit" value="Submit" src="images/icon/submit.png" width="50" height="50">
--->
-
-		<input id="button" type="reset" name="reset" value="reset"> 
 		<input id="button" type="submit" name="submit" value="Add Child">
 	</div>
 
@@ -278,14 +242,14 @@ elseif($_GET['op'] == 'delete')
 }
 else
 {
-	//view
+	// view child
 
 	include("header.php");
 	$child = mysql_fetch_array(mysql_query("SELECT * FROM nanny_child WHERE child_id = '".$_GET['child_id']."'"));
 	$family = mysql_fetch_array(mysql_query("SELECT family_name FROM nanny_family WHERE family_id = '".$_GET['family_id']."'"));
 ?>
 	<form method="post" name="child_form">
-	<h1>Child Info</h1><div class="ruleHorizontal"></div><p>
+	<h1><?= $child['first_name'];?>'s Info</h1><div class="ruleHorizontal"></div><p>
 
 	<div class="formquestion"><label>Family</label></div>
 	<div class="formanswer">
@@ -307,39 +271,27 @@ else
 	</div>
 	<br clear="all" />
 	
-	<div class="formquestion"><label>Drop Off Address</label></div>
+	<div class="formquestion"><label>Notes</label></div>
 	<div class="formanswer">
-		<input type="text" name="dropoff_address" alt="Drop Off Address" maxlength="50" value="<?= $child['dropoff_address'];?>" disabled="disabled" />
-	</div>
-	<br clear="all" />	
-	
-	<div class="formquestion"><label>Pick Up Address</label></div>
-	<div class="formanswer">
-		<input type="text" name="pickup_address" alt="Pick Up Address" maxlength="50" value="<?= $child['pickup_address'];?>" disabled="disabled" />
+                <textarea name="notes" disabled="disabled"><?= $child['notes'];?></textarea>
 	</div>
 	<br clear="all" />		
 
-	<div align="right">
-<!--
-		<a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>"><img border="0" src="images/icon/cancel.png" width="50" height="50"></a>
-		<input type="image" name="submit" value="Submit" src="images/icon/submit.png" width="50" height="50">
--->
+        <h1>This Month's Schedule</h1><div class="ruleHorizontal"></div><p>
 
-		<input id="button" onclick="window.location.href='family.php?op=view&family_id=<?= $_GET['family_id'];?>'" type="button" name="edit" value="Back to Family">
-		<input id="button" onclick="window.location.href='child.php?op=edit&family_id=<?= $_GET['family_id'];?>&child_id=<?= $_GET['child_id'];?>'" type="button" name="edit" value="Edit" /> 
-<!--		<input type="submit" name="submit" value="Submit">-->
+<?
+//	draw_calendar($_GET['child_id']);
+	draw_graph($_GET['child_id']);
+?>
 
-	</div>
-
-        <h1>Weekly Schedule</h1><div class="ruleHorizontal"></div><p>
-
-	<img src="http://<?= $_SERVER['HTTP_HOST'];?>/nanny/graph_schedule.php?child_id=<?= $_GET['child_id'];?>" />
+<!--	<img src="/nanny/graph_schedule.php?child_id=<?= $_GET['child_id'];?>" />-->
 
 	<!--  Rt Column -->
 	</div><div id="rtColumn" class="cover">
 		<h5>Actions</h5>
 		<ul>
 			<li><a href="child.php?op=edit&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>">Edit Child</a></li>
+			<li><a href="schedule.php?op=edit&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>">Edit Schedule</a></li>
 			<li><a href="child.php?op=delete&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>">Delete Child</a></li>
 			<li><a href="family.php?op=view&amp;family_id=<?= $_GET['family_id'];?>">Back to Family</a></li>
 		</ul>
@@ -347,6 +299,7 @@ else
 
 	</form>
 <?
+
 }
 
 include("footer.php");

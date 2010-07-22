@@ -2,9 +2,9 @@
 
 // provide some global variables
 static $dbhost = "localhost";
-static $dbuser = "scarbrough";
-static $dbpass = "jscarbrough";
-static $dbname = "scarbrough";
+static $dbuser = "nanny";
+static $dbpass = "site";
+static $dbname = "nannysite";
 
 // setup db connection
 $db = mysql_connect($dbhost, $dbuser, $dbpass);

@@ -39,7 +39,7 @@ if($_GET['op'] == "payment")
 	
 	<div class="formquestion"><label>Payment Date</label></div>
 	<div class="formanswer">
-		<input id="payment_date" name="payment_date" />
+		<input id="payment_date" name="payment_date" value="<?= date("Y-m-d");?>" />
 		[<a href="javascript:void(0);" id="payment_date_btn">Select Date</a>]
 		<!--<button id="f_clearRangeStart" onclick="clearRangeStart()">clear</button>-->
 		<script type="text/javascript">
@@ -87,80 +87,46 @@ if($_GET['op'] == "payment")
 	</form>
 <?
 }
+elseif($_GET['op'] == "delete")
+{
+	mysql_query("DELETE FROM nanny_payment WHERE payment_id = '".$_GET['payment_id']."'");
+	header("Location: financial.php?op=view&view_days=".$_GET['view_days']);
+
+}
 else
 {
 	include("header.php");
 
-	if(!$_GET['time'])
+?>
+        <h1>
+		Payments for the previous 
+		<select onChange="location.href='financial.php?op=view&view_days='+(this.value);">
+			<option value="7" <? if($_GET['view_days'] == 7) echo 'selected="selected"';?>>7 days</option>
+			<option value="30" <? if($_GET['view_days'] == 30) echo 'selected="selected"';?>>30 days</option>
+			<option value="90" <? if($_GET['view_days'] == 90) echo 'selected="selected"';?>>90 days</option>
+			<option value="3650" <? if($_GET['view_days'] == "3650") echo 'selected="selected"';?>>All Payments</option>
+		</select>
+
+	</h1>
+	<div class="ruleHorizontal"></div><p>
+	<ul>
+
+<?
+	if(!$_GET['view_days'])
 	{
-		$_GET['time'] = time();
+		$_GET['view_days'] = 7;
 	}
 
-	$year = date('Y',$_GET['time']);
-	$month = date('n',$_GET['time']);
-	$day = date('j',$_GET['time']);
-
-	$num_days = date("t",$_GET['time']);
-	$start_day = date("w",mktime(0,0,0,$month,1,$year));
-	$num_weeks = ceil(($num_days + $start_day) / 7);
-
-	for($x = 1; $x <= 7 * $num_weeks; $x++)
+	$result = mysql_query("SELECT * FROM nanny_payment WHERE payment_date > '".(time() - $_GET['view_days']*24*60*60)."'");
+	while($payment = mysql_fetch_array($result))
 	{
-		if($x - $start_day > $num_days || $x - $start_day < 1)
-			$data[$x] = null;
-		else
-			$data[$x] = $x - $start_day;
+		$family = mysql_fetch_array(mysql_query("SELECT family_name FROM nanny_family WHERE family_id = '".$payment['family_id']."'"));
+?>
+		<li><?= date("l F jS", $payment['payment_date']);?> - The <?= $family['family_name'];?> Family - $<?= $payment['amount'];?> [<a href="financial.php?op=delete&amp;payment_id=<?= $payment['payment_id'];?>&amp;view_days=<?= $_GET['view_days'];?>">Delete</a>]</li>
+<?		
 	}
+?>
 
-	$prev_time = $_GET['time'] - ($day * 24 * 60 * 60) - (15 * 24 * 60 * 60);
-	$next_time = $_GET['time'] + (($num_days - $day) * 24 * 60 * 60) + (15 * 24 * 60 * 60);
-	
-	?> 
-	
-	<table width="100%" border="1" style="border-collapse: collapse;" cellpadding="2" cellspacing="2">
-		<tr>
-			<th><a href="financial.php?op=view&amp;time=<?= $prev_time;?>"><<</a></th>
-			<th colspan="5"><?= date('M', mktime(0,0,0,$month,1,$year)).' '.$year; ?></th>
-			<th><a href="financial.php?op=view&amp;time=<?= $next_time;?>">>></a></th>
-		</tr>
-		<tr>
-			<th width="15%">Sun</th>
-			<th width="14%">Mon</th>
-			<th width="14%">Tue</th>
-			<th width="14%">Wed</th>
-			<th width="14%">Thur</th>
-			<th width="14%">Fri</th>
-			<th>Sat</th>
-		</tr>
-	
-	<?
-	
-	for($x = 1; $x <= 7 * $num_weeks; $x++)
-	{
-		$today = null;
-	
-		if($data[$x] == $day && $_GET['time'] == time())
-			$today = "bgcolor=\"lightgreen\"";
-
-		$result = mysql_query("SELECT * FROM nanny_payment WHERE payment_date = '".mktime(0,0,0,$month,$data[$x],$year)."'");
-		while($payment = mysql_fetch_array($result))
-		{
-			$family = mysql_fetch_array(mysql_query("SELECT family_name FROM nanny_family WHERE family_id = '".$payment['family_id']."'"));
-			$data[$x] .= "<div style='font-size: 9px;'>".$family['family_name']."($".round($payment['amount']).")</div>";
-		}
-	
-		echo "<td height=\"70\" align=\"left\" valign=\"top\" $today>".$data[$x]."</td>\n";
-		
-		if($x % 7 == 0)
-		{
-			echo "</tr><tr>";
-		}
-	}
-	
-	?>
-	
-	</tr></table>
-	
 	<!--  Rt Column -->
 	</div><div id="rtColumn" class="cover">
 		<h5>Actions</h5>

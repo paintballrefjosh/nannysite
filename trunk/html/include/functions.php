@@ -1,5 +1,139 @@
 <?
 
+function draw_graph($child_id = 0, $family_id = 0)
+{
+	for($x = -7; $x < 7; $x++)
+	{
+		$time = ($x * 60 * 60 * 24) + time();
+?>
+		<img src="include/draw_graph.php?time=<?= $time;?>&child_id=<?= $child_id;?>&family_id=<?= $family_id;?>">
+<?
+
+	}
+
+}
+
+function draw_calendar($child_id = 0, $family_id = 0)
+{
+	if($child_id != 0)
+	{
+		$sql = "SELECT * FROM nanny_schedule WHERE child_id = '".$_GET['child_id']."' AND";
+	}
+	elseif($family_id != 0)
+	{
+		$sql = "SELECT * FROM nanny_schedule WHERE (";
+
+		$result = mysql_query("SELECT child_id FROM nanny_child WHERE family_id = '".$family_id."'");
+		while($child = mysql_fetch_array($result))
+		{
+			$sql .= "child_id = '".$child['child_id']."' OR ";
+		}
+		
+		$sql = substr($sql, 0, -4);
+		$sql .= ") AND";
+
+	}
+	else
+	{
+		// show all schedules on one graph
+		$sql = "SELECT * FROM nanny_schedule WHERE";
+	}
+
+        if(!$_GET['time'])
+        {
+                $_GET['time'] = time();
+        }
+
+        $year = date('Y',$_GET['time']);
+        $month = date('n',$_GET['time']);
+        $day = date('j',$_GET['time']);
+
+        $num_days = date("t",$_GET['time']);
+        $start_day = date("w",mktime(0,0,0,$month,1,$year));
+        $num_weeks = ceil(($num_days + $start_day) / 7);
+
+        for($x = 1; $x <= 7 * $num_weeks; $x++)
+        {
+                if($x - $start_day > $num_days || $x - $start_day < 1)
+                        $data[$x] = null;
+                else
+                        $data[$x] = $x - $start_day;
+        }
+
+        $prev_time = $_GET['time'] - ($day * 24 * 60 * 60) - (15 * 24 * 60 * 60);
+        $next_time = $_GET['time'] + (($num_days - $day) * 24 * 60 * 60) + (15 * 24 * 60 * 60);
+
+        ?>
+
+        <table width="100%" border="1" style="border-collapse: collapse;" cellpadding="2" cellspacing="2">
+                <tr>
+                        <th><a href="<?= $_SERVER['PHP_SELF'];?>?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>&amp;time=<?= $prev_time;?>"><<</a></th>
+                        <th colspan="5"><?= date('M', mktime(0,0,0,$month,1,$year)).' '.$year; ?></th>
+                        <th><a href="<?= $_SERVER['PHP_SELF'];?>?op=view&amp;family_id=<?= $_GET['family_id'];?>&amp;child_id=<?= $_GET['child_id'];?>&amp;time=<?= $next_time;?>">>></a></th>
+                </tr>
+                <tr>
+                        <th width="15%">Sun</th>
+                        <th width="14%">Mon</th>
+                        <th width="14%">Tue</th>
+                        <th width="14%">Wed</th>
+                        <th width="14%">Thur</th>
+                        <th width="14%">Fri</th>
+                        <th>Sat</th>
+                </tr>
+
+<?
+
+	for($x = 1; $x <= 7 * $num_weeks; $x++)
+        {
+                $today = null;
+                $isdata = false;
+                $cal_day = $data[$x];
+
+                if($cal_day == date('j', time()) && $month == date('n', time()) && $year = date('Y', time()))
+                        $today = "bgcolor=\"lightgreen\"";
+
+                $result = mysql_query($sql . " start_time > '".mktime(0,0,0,$month,$cal_day,$year)."' AND start_time < '".mktime(0,0,0,$month,$cal_day+1,$year)."'");
+                while($schedule = mysql_fetch_array($result))
+                {
+                        $isdata = true;
+
+                        $child = mysql_fetch_array(mysql_query("SELECT first_name FROM nanny_child WHERE child_id = '".$schedule['child_id']."'"));
+                        $data[$x] = "<div style='float: top left; font-size: 9px;'>".$child['first_name']." ".date("G:i", $schedule['start_time'])." - ".date("G:i", $schedule['end_time'])."</div>";
+                }
+
+                if($cal_day > 0)
+		{
+			$data_out = "<div id=calendar_date>".$cal_day."</div>";
+		}
+
+                if($isdata || ($data[$x] != $cal_day))
+                {
+                        $data_out .= $data[$x];
+                }
+
+?>
+
+<!-- popup menu on right click <td height="80" align="left" valign="top" onContextMenu="Tip('Test!', FOLLOWMOUSE, false); return false;" onClick="UnTip();" <?= $today;?>><?= $data_out;?></td> -->
+		<td height="80" align="left" valign="top" <?= $today;?>><?= $data_out;?></td>
+
+<?
+
+                if($x % 7 == 0)
+                {
+                        echo "</tr><tr>";
+                }
+        }
+
+        ?>
+
+        </tr></table>
+
+<?	
+
+}
+
+
+
 //new function
 
 $to = "paintballrefjosh@gmail.com";
@@ -19,80 +153,80 @@ $message = "World, Hello!";
 
 function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
 {
-//SMTP + SERVER DETAILS
-/* * * * CONFIGURATION START * * * */
-$smtpServer = "fmailhost.isp.att.net";
-$port = "465";
-$timeout = "30";
-$username = "josh@moahosting.com";
-$password = "sxwfksre";
-$localhost = "moahosting.com";
-$newLine = "\r\n";
-/* * * * CONFIGURATION END * * * * */
-
-//Connect to the host on the specified port
-$smtpConnect = fsockopen($smtpServer, $port, $errno, $errstr, $timeout);
-echo "Connected successfully";
-$smtpResponse = fgets($smtpConnect, 515);
-if(empty($smtpConnect))
-{
-$output = "Failed to connect: $smtpResponse";
-return $output;
-}
-else
-{
-$logArray['connection'] = "Connected: $smtpResponse";
-}
-
-//Request Auth Login
-fputs($smtpConnect,"AUTH LOGIN" . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['authrequest'] = "$smtpResponse";
-
-//Send username
-fputs($smtpConnect, base64_encode($username) . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['authusername'] = "$smtpResponse";
-
-//Send password
-fputs($smtpConnect, base64_encode($password) . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['authpassword'] = "$smtpResponse";
-
-//Say Hello to SMTP
-fputs($smtpConnect, "HELO $localhost" . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['heloresponse'] = "$smtpResponse";
-
-//Email From
-fputs($smtpConnect, "MAIL FROM: $from" . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['mailfromresponse'] = "$smtpResponse";
-
-//Email To
-fputs($smtpConnect, "RCPT TO: $to" . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['mailtoresponse'] = "$smtpResponse";
-
-//The Email
-fputs($smtpConnect, "DATA" . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['data1response'] = "$smtpResponse";
-
-//Construct Headers
-$headers = "MIME-Version: 1.0" . $newLine;
-$headers .= "Content-type: text/html; charset=iso-8859-1" . $newLine;
-$headers .= "To: $nameto <$to>" . $newLine;
-$headers .= "From: $namefrom <$from>" . $newLine;
-
-fputs($smtpConnect, "To: $to\nFrom: $from\nSubject: $subject\n$headers\n\n$message\n.\n");
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['data2response'] = "$smtpResponse";
-
-// Say Bye to SMTP
-fputs($smtpConnect,"QUIT" . $newLine);
-$smtpResponse = fgets($smtpConnect, 515);
-$logArray['quitresponse'] = "$smtpResponse";
+	//SMTP + SERVER DETAILS
+	/* * * * CONFIGURATION START * * * */
+	$smtpServer = "fmailhost.isp.att.net";
+	$port = "465";
+	$timeout = "30";
+	$username = "josh@moahosting.com";
+	$password = "sxwfksre";
+	$localhost = "moahosting.com";
+	$newLine = "\r\n";
+	/* * * * CONFIGURATION END * * * * */
+	
+	//Connect to the host on the specified port
+	$smtpConnect = fsockopen($smtpServer, $port, $errno, $errstr, $timeout);
+	echo "C	onnected successfully";
+	$smtpResponse = fgets($smtpConnect, 515);
+	if(empty($smtpConnect))
+	{
+	$output = "Failed to connect: $smtpResponse";
+	return $output;
+	}
+	else
+	{
+	$logArray['connection'] = "Connected: $smtpResponse";
+	}
+	
+	//Request Auth Login
+	fputs($smtpConnect,"AUTH LOGIN" . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['authrequest'] = "$smtpResponse";
+	
+	//Send username
+	fputs($smtpConnect, base64_encode($username) . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['authusername'] = "$smtpResponse";
+	
+	//Send password
+	fputs($smtpConnect, base64_encode($password) . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['authpassword'] = "$smtpResponse";
+	
+	//Say Hello to SMTP
+	fputs($smtpConnect, "HELO $localhost" . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['heloresponse'] = "$smtpResponse";
+	
+	//Email From
+	fputs($smtpConnect, "MAIL FROM: $from" . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['mailfromresponse'] = "$smtpResponse";
+	
+	//Email To
+	fputs($smtpConnect, "RCPT TO: $to" . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['mailtoresponse'] = "$smtpResponse";
+	
+	//The Email
+	fputs($smtpConnect, "DATA" . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['data1response'] = "$smtpResponse";
+	
+	//Construct Headers
+	$headers = "MIME-Version: 1.0" . $newLine;
+	$headers .= "Content-type: text/html; charset=iso-8859-1" . $newLine;
+	$headers .= "To: $nameto <$to>" . $newLine;
+	$headers .= "From: $namefrom <$from>" . $newLine;
+	
+	fputs($smtpConnect, "To: $to\nFrom: $from\nSubject: $subject\n$headers\n\n$message\n.\n");
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['data2response'] = "$smtpResponse";
+	
+	// Say Bye to SMTP
+	fputs($smtpConnect,"QUIT" . $newLine);
+	$smtpResponse = fgets($smtpConnect, 515);
+	$logArray['quitresponse'] = "$smtpResponse";
 }
 
 function do_error($sql = "", $db = "")
@@ -120,7 +254,7 @@ function do_error($sql = "", $db = "")
 
 	mail("paintballrefjosh@gmail.com", "Error on the Nanny Site!", $msg, $headers);
 }
-
+/*
 function generate_date($day)
 {
 	switch($day)
@@ -134,7 +268,7 @@ function generate_date($day)
 		case "sunday" : return "2009-08-30";
 	}
 }
-
+*/
 function graph_schedule($data, $title, $show_day)
 {
 	require_once("jpgraph.php");
