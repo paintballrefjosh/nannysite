@@ -1,7 +1,11 @@
 <?
 
 include("config.php");
-include("include/functions.php");
+
+if(!is_admin())
+{
+	header("Location: index.php");
+}
 
 if($_GET['op'] == "edit")
 {
@@ -25,7 +29,7 @@ if($_GET['op'] == "edit")
 
 ?>
         <form method="post" name="child_form">
-        <h1>Edit Child Schedule</h1><div class="ruleHorizontal"></div><p>
+        <h2>Edit Child Schedule</h2><div class="ruleHorizontal"></div><p>
 
         <div class="formquestion"><label>Family</label></div>
         <div class="formanswer">
@@ -101,7 +105,7 @@ if($_GET['op'] == "edit")
         </div>
 
 
-        <h1>Existing Schedule</h1><div class="ruleHorizontal"></div><p>
+        <h2>Existing Schedule</h2><div class="ruleHorizontal"></div><p>
 	<ul>
 <?
 	$result = mysql_query("SELECT * FROM nanny_schedule WHERE child_id = '".$_GET['child_id']."' AND start_time > '".(time() - 24*60*60*7)."'");
@@ -112,14 +116,6 @@ if($_GET['op'] == "edit")
 <?
 	}
 ?>
-        <!--  Rt Column -->
-        </div><div id="rtColumn" class="cover">
-                <h5>Actions</h5>
-                <ul>
-                        <li><a href="child.php?op=view&amp;child_id=<?= $_GET['child_id'];?>&amp;family_id=<?= $_GET['family_id'];?>">Back to Child</a></li>
-                </ul>
-        </div>
-
         </form>
 <?
 
@@ -133,7 +129,6 @@ else
 {
 
 //view
-include("config.php");
 include("header.php");
 
 //draw_calendar();
@@ -145,7 +140,7 @@ $family = mysql_fetch_array(mysql_query("SELECT family_name FROM nanny_family WH
 
 ?>
 <form method="post" name="child_form">
-<h1>Weekly Schedule</h1><div class="ruleHorizontal"></div><p>
+<h2>Weekly Schedule</h2><div class="ruleHorizontal"></div><p>
 
 <?
 for($x = -7; $x < 7; $x++)
@@ -158,16 +153,6 @@ for($x = -7; $x < 7; $x++)
 }
 
 ?>
-
-<!--  Rt Column -->
-</div><div id="rtColumn" class="cover">
-	<h5>Actions</h5>
-	<ul>
-		<li><a href="family.php">View Families</a></li>
-		<li><a href="financial.php">View Payments</li>
-	</ul>
-</div>
-
 </form>
 <?
 

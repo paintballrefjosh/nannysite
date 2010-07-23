@@ -1,16 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"> 
+<?
+require_once("config.php");
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>The Scarbrough's Site</title>	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>The Little Explorers</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="css/default.css" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" href="images/favicon.ico" >
 
-<!-- CSS Stylesheets -->
-	<link href="css/main.css" rel="stylesheet" type="text/css" />
-	<link href="css/menu_dropdown.css" rel="stylesheet" type="text/css" />
-	<link href="css/homepage.css" rel="stylesheet" type="text/css" />
-
-<!-- Javascript Calendar -->
+	<!-- Javascript Calendar -->
 	<script src="js/jscal2.js"></script>
         <script src="js/jscal2_en.js"></script>
         <link rel="stylesheet" type="text/css" href="css/jscal2.css" />
@@ -20,79 +22,66 @@
 
 <body>
 
-<!-- Tooltip -->
-<script src="js/wz_tooltip.js"></script>
-
-<div id="bg_top"></div>
 <div id="wrapper">
+<img src="images/img10.gif" alt="" width="260" height="160" class="image1"/>
+<img src="images/img9.gif" alt="" width="260" height="160" class="image2"/>
 
-<ol id="mainNav">
+<div id="header">
+	<h1>The Little Explorers</h1>
+	<h2>An adventure around every corner</h2>
 
+	<div id="menu">
+		<ul>
+			<li class="first"><a href="index.php" accesskey="1" title="" style="padding-right:15px;">Home</a></li>
+			<li><a href="about.php" accesskey="2" title="" style="padding-right:15px; padding-left:15px;">About Us</a></li>
+			<li><a href="schedule.php" accesskey="3" title="" style="padding-right:15px; padding-left:15px;">Schedule</a></li>
+			<li><a href="account.php" accesskey="3" title="" style="padding-right:15px; padding-left:15px;">My Account</a></li>
+			<li><a href="contact.php" style="padding-right:15px; padding-left:15px;">Contact Us</a></li>
+		</ul>
+	</div>
+</div>
+
+</div>
+
+<div id="content">
+        <div id="colOne">
 <?
-if(isset($_SESSION['user_id']))
+if(is_admin())
 {
+	if(isset($admin_sub_menu))
+	{
+		echo $admin_sub_menu."<br><br>";
+	}
 ?>
-
-	<li>
-		<a href="index.php">Home</a> 
-	</li>
-
-	<li>
-		<a href="family.php">Nanny Site</a> 
-		<ol>
-			<li><a href="family.php">Families</a></li>
+		<h3>Administration</h3>
+		<ul>
+			<li class="first"><a href="family.php">Families</a></li>
 			<li><a href="schedule.php">Schedule</a></li>
-			<li class="lastChild"><a href="financial.php">Financial</a></li>
-		</ol> 
-	</li>
-
-	<li>
-		<a href="budget.php">Budget</a>
-		<ol>
-			<li class="lastChild"><a href="budget.php">Current Budget</a></li>
-		</ol>
-	</li>
-
-	<li>
-		<a href="calendar.php">Calendar</a>
-		<ol>
-			<li class="lastChild"><a href="calendar.php">View Calendar</a></li>
-		</ol>
-	</li>		
-
-	<li>
-		<a href="admin.php">Administration</a>
-		<ol>
-			<li class="lastChild"><a href="admin.php">User Admin</a></li>
-		</ol>
-	</li>	
-
-	<li>
-		<a href="logout.php">Logout</a>
-
-	</li>	
+			<li><a href="financial.php">Financial</a></li>
+			<li><a href="logout.php">Logout</a></li>
 <?
-}
-else
+if(is_super_admin())
 {
 ?>
-	<li>
-		<a href="login.php">Login</a>
-
-	</li>	
+			<li><a href="users.php">Users</a></li>
 <?
 }
 ?>
-
-</ol>
-
-<!-- end header -->
-
-<!--<div id="homePCI"></div>-->
-	
-<!-- Content -->
-<div id="content" class="cover">
-<div id="colLeft" style="padding-top:11px;">
-
-		
-		
+		</ul>
+<?
+}
+?>
+<!--                <h3>Sip & Safari has:</h3>
+                <ul>
+                        <li class="first">A nursing area</li>
+                        <li>A change table & potty</li>
+                        <li>A kids menu</li>
+                        <li>Healthy food choices</li>
+                        <li>Caffeine-free choices</li>
+                        <li>A fun atmosphere</li>
+                        <li>A large play area</li>
+                        <li>Seating within the play area</li>
+                        <li>Cafe seating for parents</li>
+                </ul>
+-->        </div>
+	<div id="colTwo">

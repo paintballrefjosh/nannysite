@@ -43,36 +43,24 @@ include("header.php");
 
 ?>
 
-	<h1>Please Login</h1>
-	<div class="ruleHorizontal"></div><p>
+<h2>Please Login</h2>
+<form method="post">
+<div><label>Email Address</label></div>
+<div><input class="tf" type="text" name="email_address" alt="Email Address" maxlength="50" /></div>
+<br clear="all" />
 
-	<form method="post">
+<div><label>Password</label></div>
+<div><input class="tf" type="password" name="password" alt="Password" maxlength="50" /></div>
+<br clear="all" />
 
-	<div class="formquestion"><label>Email Address</label></div>
-	<div class="formanswer">
-		<input type="text" name="email_address" alt="Email Address" maxlength="50" />
-	</div><br clear="all" />	
-	
-	<div class="formquestion"><label>Password</label></div>
-	<div class="formanswer">
-		<input type="password" name="password" alt="Password" maxlength="50" />
-	</div><br clear="all" />
+<div align="right">
+	<input id="button" type="reset" name="reset" value="Reset">
+	<input id="button" type="submit" name="submit" value="Login">
+</div>
+<br clear="all" />
 
-	<div align="right">
-		<input id="button" type="reset" name="reset" value="Reset"> 
-		<input id="button" type="submit" name="submit" value="Login">
-	</div>
+</form>
 
-	</form>
-
-	<!--  Rt Column -->
-	</div><div id="rtColumn" class="cover">
-		<h5>Contact</h5>
-		<ul>
-			<li><a href="javascript:this.parent_form.submit();">Save Changes</a></li>
-			<li><a href="family.php?op=add">Cancel</a></li>
-		</ul>
-	</div>
 <?
 
 include("footer.php");
