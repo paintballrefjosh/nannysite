@@ -19,4 +19,5 @@ if(!isset($_SESSION['user_id']) && !eregi("login.php", $_SERVER['PHP_SELF']))
 	header("Location: login.php");
 }
 
+include("include/functions.php");
 ?>

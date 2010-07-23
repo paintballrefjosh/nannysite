@@ -8,14 +8,14 @@
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================
 
-require_once('jpg-config.inc.php');
-require_once('jpgraph_gradient.php');
-require_once('jpgraph_errhandler.inc.php');
-require_once('jpgraph_ttf.inc.php');
-require_once('jpgraph_rgb.inc.php');
-require_once('jpgraph_text.inc.php');
-require_once('jpgraph_legend.inc.php');
-require_once('gd_image.inc.php');
+require_once('jpgraph/jpg-config.inc.php');
+require_once('jpgraph/jpgraph_gradient.php');
+require_once('jpgraph/jpgraph_errhandler.inc.php');
+require_once('jpgraph/jpgraph_ttf.inc.php');
+require_once('jpgraph/jpgraph_rgb.inc.php');
+require_once('jpgraph/jpgraph_text.inc.php');
+require_once('jpgraph/jpgraph_legend.inc.php');
+require_once('jpgraph/gd_image.inc.php');
 
 // Version info
 define('JPG_VERSION','3.0.2');

@@ -1,6 +1,6 @@
 <?
-include("../config.php");
-include("functions.php");
+require_once("../config.php");
+require_once("functions.php");
 
 unset($data);
 
@@ -46,7 +46,7 @@ while($schedule = mysql_fetch_array($result))
 	$y++;
 }
 
-if($data)
+if(isset($data))
 {
 	graph_schedule($data, date("l F jS", $_GET['time']), 1);
 }
